@@ -49,6 +49,24 @@ int hardClipping(double *dados, int n_amostras, double limite) {
   return n_alterados;
 }
 
-void limitaSinal(double *dados, int n_amostras, int n_passos);
+void limitaSinal(double *dados, int n_amostras, int n_passos) {
+  int i, j;
+  float fator = 0;
+  float incremento;
+  for (i = 0; i < n_amostras; i++) {
+    if (dados[i] > 1 || dados[i] < -1) {
+      fator = 1 / dados[i];
+      incremento = (1 - fator) / (n_passos + 1);
+      dados[i] *= fator;
+      fator += incremento;
+      for (j = 1; j < n_passos; j++, fator += incremento) {
+        if (i - j >= 0)
+          dados[i - j] *= fator;
+        if (i + j < n_amostras)
+          dados[i + j] *= fator;
+      }
+    }
+  }
+}
 
 void geraOndaQuadrada(double *dados, int n_amostras, int taxa, double freq);
