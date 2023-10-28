@@ -69,4 +69,21 @@ void limitaSinal(double *dados, int n_amostras, int n_passos) {
   }
 }
 
-void geraOndaQuadrada(double *dados, int n_amostras, int taxa, double freq);
+void geraOndaQuadrada(double *dados, int n_amostras, int taxa, double freq)
+{
+  int i, sinal, n_ciclo;
+  float meio_periodo;
+
+  meio_periodo = taxa/(2*freq);
+  sinal = 1;
+  n_ciclo = 1;
+  for (int i = 0; i < n_amostras; i++)
+  {
+    dados[i] = 1 * sinal;
+    if (i == n_ciclo*meio_periodo)
+    {
+      sinal *= -1;
+      n_ciclo++;
+    }
+  }
+}
