@@ -1,3 +1,10 @@
+/*============================================================================*/
+/*
+*  Autores:
+*  Felipe dos Reis Garcez - 2602660
+*  Eduardo Vinicius Dias - 2602644
+*/
+/*============================================================================*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -51,15 +58,29 @@ int hardClipping(double *dados, int n_amostras, double limite) {
 
 void limitaSinal(double *dados, int n_amostras, int n_passos) {
   int i, j;
-  float fator = 0;
-  float incremento;
+  float fator, incremento;
+
   for (i = 0; i < n_amostras; i++) {
+
+    // Se achar um dado no vetor com valor maior que o limite.
     if (dados[i] > 1 || dados[i] < -1) {
+
+      // Fator de multiplicação inicializado como o inverso do valor encontrado.
       fator = 1 / dados[i];
+
+      /**
+      * A variável "incremento" nos diz quanto aumenta o fator de multiplicação à cada
+      * passo dado. O valor dela é determinado de tal forma que, no último "salto", seu
+      * valor não pode ser maior ou igual à 1.
+      **/    
       incremento = (1 - fator) / (n_passos + 1);
+
       dados[i] *= fator;
+
+      // À cada iteração, o fator de multiplicação aumenta.
       fator += incremento;
       for (j = 1; j < n_passos; j++, fator += incremento) {
+        // Condicionais para não multiplicar os dados que estiverem fora do vetor.
         if (i - j >= 0)
           dados[i - j] *= fator;
         if (i + j < n_amostras)
@@ -69,34 +90,19 @@ void limitaSinal(double *dados, int n_amostras, int n_passos) {
   }
 }
 
-void geraOndaQuadrada(double *dados, int n_amostras, int taxa, double freq)
-{
-  int i, sinal, n_ciclo;
-  float meio_periodo;
-
-  meio_periodo = taxa/(2*freq);
-  sinal = 1;
-  n_ciclo = 1;
-  for (int i = 0; i < n_amostras; i++)
-  {
-    dados[i] = 1 * sinal;
-    if (i == n_ciclo*meio_periodo)
-    {
-      sinal *= -1;
-      n_ciclo++;
-    }
-  }
-}
 void geraOndaQuadrada(double *dados, int n_amostras, int taxa, double freq) {
-  int i, sinal, n_ciclo;
-  double meio_periodo;
-  double erro_padrao;
-  int meio_periodo_base;
+  int i, sinal, n_ciclo, meio_periodo_base;
+  double meio_periodo, erro_padrao, erro_acumulado;
+
   meio_periodo = taxa / (2 * freq);
   meio_periodo_base = (int)meio_periodo;
   erro_padrao = meio_periodo - ((int)(meio_periodo));
-  double erro_acumulado = erro_padrao;
+  erro_acumulado = erro_padrao;
+
+  // Variável para determinar se o valor da onda será positivo ou negativo.
   sinal = 1;
+
+  // Controle do número de ciclos ocorridos.
   n_ciclo = 1;
   for (int i = 0; i < n_amostras; i++) {
     dados[i] = 1 * sinal;
