@@ -87,3 +87,24 @@ void geraOndaQuadrada(double *dados, int n_amostras, int taxa, double freq)
     }
   }
 }
+void geraOndaQuadrada(double *dados, int n_amostras, int taxa, double freq) {
+  int i, sinal, n_ciclo;
+  double meio_periodo;
+  double erro_padrao;
+  int meio_periodo_base;
+  meio_periodo = taxa / (2 * freq);
+  meio_periodo_base = (int)meio_periodo;
+  erro_padrao = meio_periodo - ((int)(meio_periodo));
+  double erro_acumulado = erro_padrao;
+  sinal = 1;
+  n_ciclo = 1;
+  for (int i = 0; i < n_amostras; i++) {
+    dados[i] = 1 * sinal;
+    if (i == n_ciclo * (meio_periodo_base + (int)erro_acumulado)) {
+      sinal *= -1;
+      n_ciclo++;
+      meio_periodo = meio_periodo_base + erro_padrao;
+      erro_acumulado = (meio_periodo - (int)(meio_periodo)) + erro_padrao;
+    }
+  }
+}
