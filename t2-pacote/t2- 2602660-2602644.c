@@ -58,7 +58,7 @@ int hardClipping(double *dados, int n_amostras, double limite) {
 
 void limitaSinal(double *dados, int n_amostras, int n_passos) {
   int i, j;
-  float fator, incremento;
+  double fator, incremento;
 
   for (i = 0; i < n_amostras; i++) {
 
@@ -83,8 +83,9 @@ void limitaSinal(double *dados, int n_amostras, int n_passos) {
       // À cada iteração, o fator de multiplicação aumenta.
       fator += incremento;
 
-      // Faz um "chuveirinho"
+      // Faz um "chuveirinho" para os dois lados.
       for (j = 1; j <= n_passos; j++, fator += incremento) {
+
         // Condicionais para não multiplicar os dados que estiverem fora do vetor.
         if (i - j >= 0)
           dados[i - j] *= fator;
