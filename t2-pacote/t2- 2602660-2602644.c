@@ -79,7 +79,7 @@ void limitaSinal(double *dados, int n_amostras, int n_passos) {
 
       // À cada iteração, o fator de multiplicação aumenta.
       fator += incremento;
-      for (j = 1; j < n_passos; j++, fator += incremento) {
+      for (j = 1; j <= n_passos; j++, fator += incremento) {
         // Condicionais para não multiplicar os dados que estiverem fora do vetor.
         if (i - j >= 0)
           dados[i - j] *= fator;
