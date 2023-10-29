@@ -66,7 +66,10 @@ void limitaSinal(double *dados, int n_amostras, int n_passos) {
     if (dados[i] > 1 || dados[i] < -1) {
 
       // Fator de multiplicação inicializado como o inverso do valor encontrado.
-      fator = 1 / dados[i];
+      if (dados[i] > 0)
+        fator = 1 / dados[i];
+      else
+        fator = -1/dados[i];
 
       /**
       * A variável "incremento" nos diz quanto aumenta o fator de multiplicação à cada
