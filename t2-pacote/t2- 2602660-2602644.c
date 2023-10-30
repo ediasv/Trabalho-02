@@ -5,9 +5,6 @@
 *  Eduardo Vinicius Dias - 2602644
 */
 /*============================================================================*/
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 #include "trabalho2.h"
 #include "wavfile.h"
