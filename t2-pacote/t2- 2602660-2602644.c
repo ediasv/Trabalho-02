@@ -99,7 +99,7 @@ void limitaSinal(double *dados, int n_amostras, int n_passos) {
 void geraOndaQuadrada(double *dados, int n_amostras, int taxa, double freq) {
   int i, sinal, controle;
   double meio_periodo, erro_acumulado;
-
+  double meio_periodo_atual;
   meio_periodo = taxa / (2 * freq);
 
   // Parte decimal do meio período.
@@ -108,15 +108,16 @@ void geraOndaQuadrada(double *dados, int n_amostras, int taxa, double freq) {
   // Variável para determinar se o valor da onda será positivo ou negativo.
   sinal = 1;
   controle = (int)meio_periodo;
+  meio_periodo_atual = meio_periodo;
   for (int i = 0; i < n_amostras; i++) {
     dados[i] = 1 * sinal;
 
-    if (i == controle) {
+    if (i == controle - 1) {
       sinal *= -1;
 
       // Essas atribuições ocorrem pra manter a precisão, devido ao typecasting
-      erro_acumulado += meio_periodo - ((int)meio_periodo);
-
+      erro_acumulado = meio_periodo_atual - ((int)meio_periodo_atual);
+      meio_periodo_atual = meio_periodo + erro_acumulado;
       controle += (int)(meio_periodo + erro_acumulado);
     }
   }
