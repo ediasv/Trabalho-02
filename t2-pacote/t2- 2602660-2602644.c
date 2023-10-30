@@ -98,8 +98,8 @@ void limitaSinal(double *dados, int n_amostras, int n_passos) {
 
 void geraOndaQuadrada(double *dados, int n_amostras, int taxa, double freq) {
   int i, sinal, controle;
-  double meio_periodo, erro_acumulado;
-  double meio_periodo_atual;
+  double meio_periodo, erro_acumulado, meio_periodo_atual;
+  
   meio_periodo = taxa / (2 * freq);
 
   // Parte decimal do meio período.
@@ -107,20 +107,28 @@ void geraOndaQuadrada(double *dados, int n_amostras, int taxa, double freq) {
 
   // Variável para determinar se o valor da onda será positivo ou negativo.
   sinal = 1;
+
+  // Controla em qual iteração o sinal irá mudar.
   controle = (int)meio_periodo;
+
+  // Variável para atualizar o erro acumulado quando o sinal for alterado.
   meio_periodo_atual = meio_periodo;
+
   for (int i = 0; i < n_amostras; i++) {
     dados[i] = 1 * sinal;
 
+    // Colocar "controle - 1" porque a contagem das posições do vetor começa em 0.
     if (i == controle - 1) { 
-      // colocar "controle - 1" porque a contagem das posições do vetor começa em 0.
       sinal *= -1;
-      // atualização do erro
+
+      // Atualização do erro.
       erro_acumulado = meio_periodo_atual - ((int)meio_periodo_atual);
+
+      // Atualização do meio periodo atual para estipular o próximo erro.
       meio_periodo_atual = meio_periodo + erro_acumulado; 
-      // atualização do meio periodo atual para estipular o próximo erro
+
+      // Atualização para determinar o próximo número de interações.
       controle += (int)(meio_periodo + erro_acumulado);
-      // atualização para determinar o próximo número de interações 
     }
   }
 }
