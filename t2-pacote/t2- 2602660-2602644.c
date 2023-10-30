@@ -112,13 +112,15 @@ void geraOndaQuadrada(double *dados, int n_amostras, int taxa, double freq) {
   for (int i = 0; i < n_amostras; i++) {
     dados[i] = 1 * sinal;
 
-    if (i == controle - 1) {
+    if (i == controle - 1) { 
+      // colocar "controle - 1" porque a contagem das posições do vetor começa em 0.
       sinal *= -1;
-
-      // Essas atribuições ocorrem pra manter a precisão, devido ao typecasting
+      // atualização do erro
       erro_acumulado = meio_periodo_atual - ((int)meio_periodo_atual);
-      meio_periodo_atual = meio_periodo + erro_acumulado;
+      meio_periodo_atual = meio_periodo + erro_acumulado; 
+      // atualização do meio periodo atual para estipular o proximo erro
       controle += (int)(meio_periodo + erro_acumulado);
+      // atualização para determinar o próximo número de interações 
     }
   }
 }
