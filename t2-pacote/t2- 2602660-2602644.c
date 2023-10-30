@@ -118,7 +118,7 @@ void geraOndaQuadrada(double *dados, int n_amostras, int taxa, double freq) {
       // atualização do erro
       erro_acumulado = meio_periodo_atual - ((int)meio_periodo_atual);
       meio_periodo_atual = meio_periodo + erro_acumulado; 
-      // atualização do meio periodo atual para estipular o proximo erro
+      // atualização do meio periodo atual para estipular o próximo erro
       controle += (int)(meio_periodo + erro_acumulado);
       // atualização para determinar o próximo número de interações 
     }
